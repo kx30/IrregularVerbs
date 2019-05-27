@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".mvp.activities.ChooseComplexityExamActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <Button
+        android:id="@+id/firstLevelButton"
+        style="@style/baseButton"
+        android:background="@drawable/base_button_background"
+        android:text="level 1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+
+    <Button
+        android:id="@+id/secondLevelButton"
+        style="@style/baseButton"
+        android:background="@drawable/base_button_background"
+        android:text="level 2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/firstLevelButton" />
+
+    <Button
+        android:id="@+id/thirdLevelButton"
+        style="@style/baseButton"
+        android:background="@drawable/base_button_background"
+        android:text="level 3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/secondLevelButton" />
+
+    <Button
+        android:id="@+id/fourthLevelButton"
+        style="@style/baseButton"
+        android:background="@drawable/base_button_background"
+        android:text="level 4"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/thirdLevelButton" />
+
+    <Button
+        android:id="@+id/fifthLevelButton"
+        style="@style/baseButton"
+        android:background="@drawable/base_button_background"
+        android:text="level 5"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/fourthLevelButton" />
+
+</android.support.constraint.ConstraintLayout>

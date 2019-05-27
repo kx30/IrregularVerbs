@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimaryDark"
+    tools:context=".mvp.activities.VerbQuizActivity">
+
+    <include layout="@layout/toolbar" />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="8dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="20dp"
+        android:indeterminate="false"
+        android:max="100"
+        android:progress="0"
+        android:progressDrawable="@drawable/horizontal_progress_bar_style"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+    <TextView
+        android:id="@+id/currentProgressInPercent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0%"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/progressBar"
+        app:layout_constraintTop_toBottomOf="@id/progressBar" />
+
+    <TextView
+        android:id="@+id/currentVerbTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:textColor="@color/black"
+        android:textSize="36sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/progressBar" />
+
+    <TextView
+        android:id="@+id/translateTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:text="Text"
+        android:gravity="center"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintTop_toBottomOf="@id/currentVerbTextView" />
+
+    <TextView
+        android:id="@+id/currentFormOfVerbTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="v1"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/translateTextView" />
+
+    <EditText
+        android:id="@+id/currentVerbEditText"
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginStart="80dp"
+        android:layout_marginEnd="80dp"
+        android:background="@drawable/verb_edit_text_background"
+        android:gravity="center"
+        android:inputType="text"
+        android:maxLines="1"
+        android:padding="8dp"
+        android:textSize="30sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/currentFormOfVerbTextView" />
+
+    <Button
+        android:id="@+id/okButton"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="1dp"
+        android:background="@drawable/circle_button"
+        android:text="OK"
+        app:layout_constraintBottom_toBottomOf="@id/currentVerbEditText"
+        app:layout_constraintEnd_toEndOf="@id/currentVerbEditText"
+        app:layout_constraintTop_toTopOf="@id/currentVerbEditText" />
+
+    <TextView
+        android:id="@+id/crossedWrongWordTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/currentVerbEditText" />
+
+    <TextView
+        android:id="@+id/wrongAnswerTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="@string/wrong_answer"
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:visibility="invisible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/crossedWrongWordTextView" />
+
+    <TextView
+        android:id="@+id/firstFormOfVerbTextView"
+        style="@style/formOfVerbTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20sp"
+        app:layout_constraintEnd_toStartOf="@id/secondFormOfVerbTextView"
+        app:layout_constraintTop_toBottomOf="@id/wrongAnswerTextView" />
+
+    <TextView
+        android:id="@+id/secondFormOfVerbTextView"
+        style="@style/formOfVerbTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/wrongAnswerTextView" />
+
+    <TextView
+        android:id="@+id/thirdFormOfVerbTextView"
+        style="@style/formOfVerbTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        app:layout_constraintStart_toEndOf="@id/secondFormOfVerbTextView"
+        app:layout_constraintTop_toBottomOf="@id/wrongAnswerTextView" />
+
+    <TextView
+        android:id="@+id/percentOfCurrentAnswers"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/secondFormOfVerbTextView" />
+
+
+</android.support.constraint.ConstraintLayout>

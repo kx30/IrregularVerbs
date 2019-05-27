@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:orientation="horizontal"
+    android:weightSum="3">
+
+    <TextView
+        android:id="@+id/firstFormOfVerbItemTextView"
+        style="@style/listTextView"
+        android:text="be" />
+
+    <TextView
+        android:id="@+id/secondFormOfVerbItemTextView"
+        style="@style/listTextView"
+        android:text="was/were" />
+
+    <TextView
+        android:id="@+id/thirdFormOfVerbItemTextView"
+        style="@style/listTextView"
+        android:text="been" />
+
+
+</LinearLayout>
