@@ -27,4 +27,13 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/examButton" />
 
+    <Button
+        android:id="@+id/flashcardButton"
+        style="@style/baseButton"
+        android:background="@drawable/base_button_background"
+        android:text="Flashcard"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/listButton" />
+
 </android.support.constraint.ConstraintLayout>

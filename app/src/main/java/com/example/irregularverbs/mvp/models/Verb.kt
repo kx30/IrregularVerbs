@@ -1,11 +1,15 @@
 package com.example.irregularverbs.mvp.models
 
-data class Verb(
-    val firstForm: String,
-    val secondForm: String,
-    val thirdForm: String,
-    val complexity: Int = 1,
-    var translate: String,
+import io.realm.RealmObject
+import io.realm.annotations.RealmClass
+
+@RealmClass
+open class Verb (
+    var firstForm: String = "",
+    var secondForm: String = "",
+    var thirdForm: String = "",
+    var complexity: Int = 1,
+    var translate: String = "",
     var amountOfCorrectAnswers: Int = 0
-)
+) : RealmObject()
 

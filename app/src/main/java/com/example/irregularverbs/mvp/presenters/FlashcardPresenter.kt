@@ -4,19 +4,20 @@ import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.irregularverbs.gateway.local.LocalVerbGateway
 import com.example.irregularverbs.mvp.models.Verb
-import com.example.irregularverbs.mvp.views.VerbListView
+import com.example.irregularverbs.mvp.views.FlashcardView
 
 @InjectViewState
-class VerbListPresenter : MvpPresenter<VerbListView>() {
+class FlashcardPresenter: MvpPresenter<FlashcardView>() {
 
+    private var level = 1
     private lateinit var verbList: ArrayList<Verb>
 
-    init {
-        getVerbList()
+    fun setLevel(level: Int) {
+        this.level = level
     }
 
-    private fun getVerbList() {
-//        verbList = LocalVerbGateway().loadVerbs(null)
+    fun getVerbList() {
+//        verbList = LocalVerbGateway().loadVerbs(level)
         viewState.initRecyclerView(verbList)
     }
 }

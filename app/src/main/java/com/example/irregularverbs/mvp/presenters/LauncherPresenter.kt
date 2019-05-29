@@ -5,13 +5,17 @@ import com.arellomobile.mvp.MvpPresenter
 import com.example.irregularverbs.mvp.views.LauncherView
 
 @InjectViewState
-class LauncherPresenter: MvpPresenter<LauncherView>() {
+class LauncherPresenter(): MvpPresenter<LauncherView>() {
 
-    fun startChooseComplexityExamActivity() {
-        viewState.startChooseComplexityExamActivity()
+    fun startChooseLevelExamActivity() {
+        viewState.startChooseLevelExamActivity()
     }
 
     fun startVerbsListActivity() {
         viewState.startVerbsListActivity()
+    }
+
+    fun startChooseLevelFlashcardActivity() {
+        viewState.startChooseLevelFlashcardActivity()
     }
 }

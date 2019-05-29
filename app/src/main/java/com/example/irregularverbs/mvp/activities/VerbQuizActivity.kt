@@ -1,13 +1,11 @@
 package com.example.irregularverbs.mvp.activities
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
-import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.example.irregularverbs.R
 import com.example.irregularverbs.mvp.models.Verb
 import com.example.irregularverbs.mvp.presenters.VerbQuizPresenter
@@ -30,8 +28,8 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
     }
 
     private fun initPresenter() {
-        val complexity = intent.getIntExtra("Complexity", 2)
-        verbQuizPresenter.setComplexity(complexity)
+        val level = intent.getIntExtra("Level", 1)
+        verbQuizPresenter.setLevel(level)
         verbQuizPresenter.initVerbs()
         verbQuizPresenter.getNewVerb()
     }
@@ -86,8 +84,8 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
         finish()
     }
 
-    override fun getComplexity(complexity: Int) {
-        verbQuizPresenter.setComplexity(complexity)
+    override fun getLevel(level: Int) {
+        verbQuizPresenter.setLevel(level)
     }
 
     private fun setVisibleTextViews() {

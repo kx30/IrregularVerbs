@@ -12,14 +12,14 @@ import kotlin.random.Random
 class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
 
     private lateinit var verbs: ArrayList<Verb>
-    private var complexity = 1
+    private var level = 1
     private var currentVerbIndex = 0
     private var formOfVerb: Int = 0
     private var totalAmountOfCorrectAnswers = 0
     private var progressPercent: Float = 0f
 
     fun initVerbs() {
-        verbs = LocalVerbGateway().loadVerbs(complexity)
+//        verbs = LocalVerbGateway().loadVerbs(level)
         verbs.shuffle()
     }
 
@@ -28,8 +28,8 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
         getNewVerb()
     }
 
-    fun setComplexity(complexity: Int) {
-        this.complexity = complexity
+    fun setLevel(level: Int) {
+        this.level = level
     }
 
     private fun checkVerbIsCorrectly(result: String) {

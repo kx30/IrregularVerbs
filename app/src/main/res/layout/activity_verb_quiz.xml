@@ -54,8 +54,9 @@
         app:layout_constraintStart_toStartOf="parent"
         android:text="Text"
         android:gravity="center"
+        android:textStyle="italic|bold"
         android:textColor="@color/black"
-        android:textSize="20sp"
+        android:textSize="14sp"
         app:layout_constraintTop_toBottomOf="@id/currentVerbTextView" />
 
     <TextView
@@ -73,14 +74,14 @@
         android:id="@+id/currentVerbEditText"
         android:layout_width="match_parent"
         android:layout_height="56dp"
-        android:layout_marginStart="80dp"
-        android:layout_marginEnd="80dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
         android:background="@drawable/verb_edit_text_background"
         android:gravity="center"
         android:inputType="text"
         android:maxLines="1"
         android:padding="8dp"
-        android:textSize="30sp"
+        android:textSize="26sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/currentFormOfVerbTextView" />

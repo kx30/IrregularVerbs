@@ -5,7 +5,6 @@ import android.support.v7.widget.LinearLayoutManager
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
-import com.example.irregularverbs.gateway.local.LocalVerbGateway
 import com.example.irregularverbs.mvp.adapter.VerbAdapter
 import com.example.irregularverbs.mvp.models.Verb
 import com.example.irregularverbs.mvp.presenters.VerbListPresenter

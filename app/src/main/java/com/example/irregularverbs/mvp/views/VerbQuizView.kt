@@ -9,6 +9,6 @@ interface VerbQuizView: MvpView {
     fun displayIfAnswerCorrect()
     fun displayProgress(progressPercent: Float)
     fun finishActivityIfCompleted()
-    fun getComplexity(complexity: Int)
+    fun getLevel(level: Int)
     fun showToast(message: String)
 }
