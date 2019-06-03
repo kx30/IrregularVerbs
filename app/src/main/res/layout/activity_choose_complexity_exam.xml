@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".mvp.activities.ChooseLevelExamActivity">
+    tools:context=".mvp.choose_level_exam.ChooseLevelExamActivity">
 
     <include layout="@layout/toolbar" />
 

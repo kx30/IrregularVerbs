@@ -9,12 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".mvp.activities.FlashcardActivity"></activity>
-        <activity android:name=".mvp.activities.ChooseLevelFlashcardActivity" />
-        <activity android:name=".mvp.activities.ChooseLevelExamActivity" />
-        <activity android:name=".mvp.activities.VerbListActivity" />
-        <activity android:name=".mvp.activities.VerbQuizActivity" />
-        <activity android:name=".mvp.activities.LauncherActivity">
+        <activity
+            android:name=".mvp.progress.ProgressActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.flashcard.FlashcardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.choose_level_flashcard.ChooseLevelFlashcardActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.choose_level_exam.ChooseLevelExamActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.verb_list.VerbListActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.verb_quiz.VerbQuizActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.launcher.LauncherActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

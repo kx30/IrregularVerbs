@@ -1,8 +1,9 @@
-package com.example.irregularverbs.mvp.views
+package com.example.irregularverbs.mvp.verb_list
 
 import com.arellomobile.mvp.MvpView
 import com.example.irregularverbs.mvp.models.Verb
 
 interface VerbListView: MvpView {
-    fun initRecyclerView(verbList: ArrayList<Verb>)
+    fun setChosenLevelInPresenter()
+    fun notifyDataSetChangedAdapter()
 }

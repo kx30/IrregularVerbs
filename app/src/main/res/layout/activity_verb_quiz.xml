@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark"
-    tools:context=".mvp.activities.VerbQuizActivity">
+    tools:context=".mvp.verb_quiz.VerbQuizActivity">
 
     <include layout="@layout/toolbar" />
 

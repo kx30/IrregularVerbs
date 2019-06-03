@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark"
+        tools:context=".mvp.progress.ProgressActivity">
+
+        <include layout="@layout/toolbar" />
+
+        <TextView
+            android:id="@+id/yourLearningProgressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Your learning progress"
+            android:textAllCaps="true"
+            android:textColor="@color/whitish"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
+
+        <TextView
+            android:id="@+id/firstLevelProgressPercentTextView"
+            style="@style/progressPercentTextView"
+            android:text="30.2%"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/yourLearningProgressTextView" />
+
+        <TextView
+            android:id="@+id/firstLevelProgressTextView"
+            style="@style/levelProgressTextView"
+            android:text="Level 1"
+            app:layout_constraintEnd_toEndOf="@id/firstLevelProgressPercentTextView"
+            app:layout_constraintStart_toStartOf="@id/firstLevelProgressPercentTextView"
+            app:layout_constraintTop_toBottomOf="@id/firstLevelProgressPercentTextView" />
+
+
+        <TextView
+            android:id="@+id/secondLevelProgressPercentTextView"
+            style="@style/progressPercentTextView"
+            android:layout_marginStart="50dp"
+            android:text="12.4%"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firstLevelProgressTextView" />
+
+        <TextView
+            android:id="@+id/secondLevelProgressTextView"
+            style="@style/levelProgressTextView"
+            android:text="Level 2"
+            app:layout_constraintEnd_toEndOf="@id/secondLevelProgressPercentTextView"
+            app:layout_constraintStart_toStartOf="@id/secondLevelProgressPercentTextView"
+            app:layout_constraintTop_toBottomOf="@id/secondLevelProgressPercentTextView" />
+
+        <TextView
+            android:id="@+id/thirdLevelProgressPercentTextView"
+            style="@style/progressPercentTextView"
+            android:layout_marginEnd="50dp"
+            android:text="21.4%"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firstLevelProgressTextView" />
+
+        <TextView
+            android:id="@+id/thirdLevelProgressTextView"
+            style="@style/levelProgressTextView"
+            android:text="Level 3"
+            app:layout_constraintEnd_toEndOf="@id/thirdLevelProgressPercentTextView"
+            app:layout_constraintStart_toStartOf="@id/thirdLevelProgressPercentTextView"
+            app:layout_constraintTop_toBottomOf="@id/thirdLevelProgressPercentTextView" />
+
+        <TextView
+            android:id="@+id/fourthLevelProgressPercentTextView"
+            style="@style/progressPercentTextView"
+            android:text="41.5%"
+            app:layout_constraintEnd_toEndOf="@id/secondLevelProgressPercentTextView"
+            app:layout_constraintStart_toStartOf="@id/secondLevelProgressPercentTextView"
+            app:layout_constraintTop_toBottomOf="@id/thirdLevelProgressTextView" />
+
+        <TextView
+            android:id="@+id/fourthLevelProgressTextView"
+            style="@style/levelProgressTextView"
+            android:text="Level 4"
+            app:layout_constraintEnd_toEndOf="@id/secondLevelProgressPercentTextView"
+            app:layout_constraintStart_toStartOf="@id/secondLevelProgressPercentTextView"
+            app:layout_constraintTop_toBottomOf="@id/fourthLevelProgressPercentTextView" />
+
+        <TextView
+            android:id="@+id/fifthLevelProgressPercentTextView"
+            style="@style/progressPercentTextView"
+            android:text="20.5%"
+            app:layout_constraintEnd_toEndOf="@id/thirdLevelProgressPercentTextView"
+            app:layout_constraintStart_toStartOf="@id/thirdLevelProgressPercentTextView"
+            app:layout_constraintTop_toBottomOf="@id/thirdLevelProgressTextView" />
+
+        <TextView
+            android:id="@+id/fifthLevelProgressTextView"
+            style="@style/levelProgressTextView"
+            android:text="Level 5"
+            app:layout_constraintEnd_toEndOf="@id/thirdLevelProgressPercentTextView"
+            app:layout_constraintStart_toStartOf="@id/thirdLevelProgressPercentTextView"
+            app:layout_constraintTop_toBottomOf="@id/fifthLevelProgressPercentTextView" />
+
+        <LinearLayout
+            android:id="@+id/amountOfAnswersLinearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:background="@color/colorTransparencyPrimary"
+            android:gravity="center"
+            android:orientation="horizontal"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fifthLevelProgressTextView">
+
+            <TextView
+                android:id="@+id/amountOfAnswersTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="36 correct, 28 wrong answers" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/tooBadLinearLayout"
+            style="@style/progressLinearLayout"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/amountOfAnswersLinearLayout">
+
+            <TextView
+                android:id="@+id/tooBadTextView"
+                style="@style/progressDescriptionTextView"
+                android:text="@string/too_bad" />
+
+            <Button
+                android:id="@+id/tooBadButton"
+                style="@style/baseButton"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/inactive_button_background"
+                android:text="Too bad" />
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/soSoLinearLayout"
+            style="@style/progressLinearLayout"
+            android:background="@color/colorTransparencyPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tooBadLinearLayout">
+
+            <TextView
+                android:id="@+id/soSoTextView"
+                style="@style/progressDescriptionTextView"
+                android:text="@string/so_so" />
+
+            <Button
+                android:id="@+id/soSoButton"
+                style="@style/baseButton"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/inactive_button_background"
+                android:text="So so" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/exactlyKnownLinearLayout"
+            style="@style/progressLinearLayout"
+            android:background="@color/colorPrimaryDark"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/soSoLinearLayout">
+
+            <TextView
+                android:id="@+id/exactlyKnownTextView"
+                style="@style/progressDescriptionTextView"
+                android:text="@string/exactly_known" />
+
+            <Button
+                android:id="@+id/exactlyKnownButton"
+                style="@style/baseButton"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/inactive_button_background"
+                android:text="Exactly known" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/resetProgressLinearLayout"
+            style="@style/progressLinearLayout"
+            android:background="@color/colorTransparencyPrimary"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/exactlyKnownLinearLayout">
+
+            <TextView
+                android:id="@+id/resetProgressTextView"
+                style="@style/progressDescriptionTextView"
+                android:text="@string/reset_progress"/>
+
+            <Button
+                android:id="@+id/resetProgressButton"
+                style="@style/baseButton"
+                android:layout_marginBottom="14dp"
+                android:background="@drawable/base_button_background"
+                android:text="Reset all my progress" />
+
+        </LinearLayout>
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

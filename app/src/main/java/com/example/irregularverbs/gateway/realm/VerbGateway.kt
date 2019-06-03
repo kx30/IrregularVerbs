@@ -1,19 +1,28 @@
-package com.example.irregularverbs.gateway.local
+package com.example.irregularverbs.gateway.realm
 
-import android.content.Context
 import android.util.Log
 import com.example.irregularverbs.mvp.models.Verb
 import io.realm.Realm
 
 interface VerbGateway {
-    fun loadVerbs(context: Context, level: Int?): ArrayList<Verb>
-    fun saveVerbs(context: Context)
+    fun loadVerbs(level: Int?): ArrayList<Verb>
+    fun loadTooBadVerbs(): ArrayList<Verb>
+    fun loadSoSoBVerbs(): ArrayList<Verb>
+    fun loadExactlyKnownVerbs(): ArrayList<Verb>
+    fun saveVerbs()
+    fun changeAmountOfAnswers(currentVerb: Verb)
+    fun changeAmountOfMistakes(currentVerb: Verb)
+    fun deleteLevelProgress(level: Int)
+    fun resetAllProgress()
+    fun getAmountOfRightAnswers(): Int
+    fun getAmountOfWrongAnswers(): Int
 }
 
-class LocalVerbGateway : VerbGateway {
+class RealmVerbGateway : VerbGateway {
 
     companion object {
-        private val TAG = "LocalVerbGateway"
+        private const val TAG = "RealmVerbGateway"
+        const val TAG_LEVEL = "level"
         val verbList = ArrayList<Verb>()
     }
 
@@ -275,25 +284,130 @@ class LocalVerbGateway : VerbGateway {
         verbList.add(Verb("write", "wrote", "written", 5, "писать"))
     }
 
-    override fun saveVerbs(context: Context) {
+    override fun saveVerbs() {
         initVerbs()
-        Realm.init(context)
         val realm = Realm.getDefaultInstance()
         realm.beginTransaction()
         realm.insert(verbList)
         realm.commitTransaction()
     }
 
-    override fun loadVerbs(context: Context, level: Int?): ArrayList<Verb> {
-        Realm.init(context)
-        Realm.getDefaultInstance().executeTransaction {realm ->
-            val verbs = realm.where(Verb::class.java).findAll()
-            verbs.forEach { verb ->
-                verbList.add(verb)
-                Log.d(TAG, "loadVerbs: ${verb.firstForm}")
+    override fun changeAmountOfAnswers(currentVerb: Verb) {
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val verb = realm.where(Verb::class.java)
+                .equalTo("firstForm", currentVerb.firstForm)
+                .findFirst()
+
+            verb!!.amountOfCorrectAnswers++
+        }
+    }
+
+    override fun changeAmountOfMistakes(currentVerb: Verb) {
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val verb = realm.where(Verb::class.java)
+                .equalTo("firstForm", currentVerb.firstForm)
+                .findFirst()
+
+            verb!!.amountOfMistakes++
+        }
+    }
+
+    override fun loadVerbs(level: Int?): ArrayList<Verb> {
+        if (verbList.size == 0) {
+            Realm.getDefaultInstance().executeTransaction { realm ->
+                val verbs = realm.where(Verb::class.java).findAll()
+                verbs.forEach { verb ->
+                    verbList.add(verb)
+                }
             }
         }
         return loadChosenVerbs(level)
+    }
+
+    override fun deleteLevelProgress(level: Int) {
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val verbs = realm.where(Verb::class.java).equalTo(TAG_LEVEL, level).findAll()
+            verbs.forEach {
+                it.amountOfCorrectAnswers = 0
+                it.amountOfMistakes = 0
+            }
+        }
+    }
+
+    override fun resetAllProgress() {
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val verbs = realm.where(Verb::class.java).findAll()
+            verbs.forEach {
+                it.amountOfCorrectAnswers = 0
+                it.amountOfMistakes = 0
+            }
+        }
+    }
+
+    override fun loadTooBadVerbs(): ArrayList<Verb> {
+        val verbs = ArrayList<Verb>()
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val result = realm.where(Verb::class.java)
+                .lessThan("amountOfCorrectAnswers", 3)
+                .greaterThan("amountOfMistakes", 4)
+                .findAll()
+            result.forEach { verb ->
+                verbs.add(verb)
+            }
+        }
+        return verbs
+    }
+
+    override fun loadSoSoBVerbs(): ArrayList<Verb> {
+        val verbs = ArrayList<Verb>()
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val result = realm.where(Verb::class.java)
+                .between("amountOfCorrectAnswers", 3, 5)
+                .greaterThan("amountOfMistakes", 2)
+                .findAll()
+            result.forEach { verb ->
+                verbs.add(verb)
+            }
+        }
+        return verbs
+    }
+
+    override fun loadExactlyKnownVerbs(): ArrayList<Verb> {
+        val verbs = ArrayList<Verb>()
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val result = realm.where(Verb::class.java)
+                .greaterThan("amountOfCorrectAnswers", 3)
+                .lessThan("amountOfMistakes", 3)
+                .or()
+                .greaterThan("amountOfCorrectAnswers", 5)
+                .findAll()
+            result.forEach { verb ->
+                verbs.add(verb)
+            }
+        }
+        return verbs
+    }
+
+    override fun getAmountOfRightAnswers(): Int {
+        var amountOfRightAnswers = 0
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val result = realm.where(Verb::class.java).findAll()
+            result.forEach {
+                amountOfRightAnswers += it.amountOfCorrectAnswers
+            }
+        }
+        return amountOfRightAnswers
+    }
+
+    override fun getAmountOfWrongAnswers(): Int {
+        var amountOfWrongAnswers = 0
+        Realm.getDefaultInstance().executeTransaction { realm ->
+            val result = realm.where(Verb::class.java).findAll()
+            result.forEach {
+                amountOfWrongAnswers += it.amountOfMistakes
+            }
+        }
+        return amountOfWrongAnswers
     }
 
     private fun loadChosenVerbs(level: Int?): ArrayList<Verb> {
@@ -303,10 +417,11 @@ class LocalVerbGateway : VerbGateway {
             return sortedList
         }
         for (verb in verbList) {
-            if (verb.complexity == level) {
+            if (verb.level == level) {
                 sortedList.add(verb)
             }
         }
+        Log.d(TAG, "loadChosenVerbs: ${sortedList.size}")
         return sortedList
     }
 }

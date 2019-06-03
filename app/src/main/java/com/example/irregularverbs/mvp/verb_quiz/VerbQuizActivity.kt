@@ -1,4 +1,4 @@
-package com.example.irregularverbs.mvp.activities
+package com.example.irregularverbs.mvp.verb_quiz
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -8,8 +8,7 @@ import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
 import com.example.irregularverbs.mvp.models.Verb
-import com.example.irregularverbs.mvp.presenters.VerbQuizPresenter
-import com.example.irregularverbs.mvp.views.VerbQuizView
+import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_verb_quiz.*
 import java.text.DecimalFormat
 import java.util.*
@@ -20,6 +19,7 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
     @InjectPresenter
     lateinit var verbQuizPresenter: VerbQuizPresenter
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verb_quiz)
@@ -28,10 +28,8 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
     }
 
     private fun initPresenter() {
-        val level = intent.getIntExtra("Level", 1)
-        verbQuizPresenter.setLevel(level)
-        verbQuizPresenter.initVerbs()
-        verbQuizPresenter.getNewVerb()
+        val level = intent.getIntExtra(getString(R.string.TAG_LEVEL), 1)
+        verbQuizPresenter.loadIrregularVerbs(level)
     }
 
     private fun setListeners() {
@@ -52,14 +50,6 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
         }
     }
 
-    override fun displayIfAnswerWrong(verb: Verb) {
-        setVisibleTextViews()
-        crossedWrongWordTextView.text = currentVerbEditText.text
-        firstFormOfVerbTextView.text = verb.firstForm
-        secondFormOfVerbTextView.text = verb.secondForm
-        thirdFormOfVerbTextView.text = verb.thirdForm
-    }
-
     override fun displayIfAnswerCorrect() {
         setInvisibleTextViews()
         okButton.setBackgroundResource(R.drawable.green_circle_button)
@@ -68,6 +58,18 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
                 okButton.setBackgroundResource(R.drawable.circle_button)
             }
         }, 1000)
+    }
+
+    override fun displayIfAnswerWrong(verb: Verb) {
+        setVisibleTextViews()
+        crossedWrongWordTextView.text = currentVerbEditText.text
+        firstFormOfVerbTextView.text = verb.firstForm
+        secondFormOfVerbTextView.text = verb.secondForm
+        thirdFormOfVerbTextView.text = verb.thirdForm
+    }
+
+    override fun initRealm() {
+        Realm.init(this)
     }
 
     @SuppressLint("SetTextI18n")
@@ -82,10 +84,6 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
 
     override fun finishActivityIfCompleted() {
         finish()
-    }
-
-    override fun getLevel(level: Int) {
-        verbQuizPresenter.setLevel(level)
     }
 
     private fun setVisibleTextViews() {

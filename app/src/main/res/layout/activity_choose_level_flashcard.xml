@@ -1,56 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimaryDark">
 
-    <include layout="@layout/toolbar" />
+    <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimaryDark">
 
-    <Button
-        android:id="@+id/firstLevelButton"
-        style="@style/baseButton"
-        android:background="@drawable/base_button_background"
-        android:text="A-D"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar" />
+        <include layout="@layout/toolbar" />
 
+        <Button
+            android:id="@+id/firstLevelButton"
+            style="@style/baseButton"
+            android:background="@drawable/base_button_background"
+            android:text="A-D"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/toolbar" />
 
-    <Button
-        android:id="@+id/secondLevelButton"
-        style="@style/baseButton"
-        android:background="@drawable/base_button_background"
-        android:text="E-L"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/firstLevelButton" />
+        <Button
+            android:id="@+id/secondLevelButton"
+            style="@style/baseButton"
+            android:background="@drawable/base_button_background"
+            android:text="E-L"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/firstLevelButton" />
 
-    <Button
-        android:id="@+id/thirdLevelButton"
-        style="@style/baseButton"
-        android:background="@drawable/base_button_background"
-        android:text="M-R"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/secondLevelButton" />
+        <Button
+            android:id="@+id/thirdLevelButton"
+            style="@style/baseButton"
+            android:background="@drawable/base_button_background"
+            android:text="M-R"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/secondLevelButton" />
 
-    <Button
-        android:id="@+id/fourthLevelButton"
-        style="@style/baseButton"
-        android:background="@drawable/base_button_background"
-        android:text="S"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/thirdLevelButton" />
+        <Button
+            android:id="@+id/fourthLevelButton"
+            style="@style/baseButton"
+            android:background="@drawable/base_button_background"
+            android:text="S"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/thirdLevelButton" />
 
-    <Button
-        android:id="@+id/fifthLevelButton"
-        style="@style/baseButton"
-        android:background="@drawable/base_button_background"
-        android:text="T-W"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/fourthLevelButton" />
+        <Button
+            android:id="@+id/fifthLevelButton"
+            style="@style/baseButton"
+            android:background="@drawable/base_button_background"
+            android:text="T-W"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fourthLevelButton" />
 
-</android.support.constraint.ConstraintLayout>
+        <Button
+            android:id="@+id/tooBadButton"
+            style="@style/baseButton"
+            android:background="@drawable/inactive_button_background"
+            android:text="Too bad"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/fifthLevelButton" />
+
+        <Button
+            android:id="@+id/soSoButton"
+            style="@style/baseButton"
+            android:background="@drawable/inactive_button_background"
+            android:text="So so"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tooBadButton" />
+
+        <Button
+            android:id="@+id/exactlyKnownButton"
+            style="@style/baseButton"
+            android:background="@drawable/inactive_button_background"
+            android:text="Exactly known"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/soSoButton" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</ScrollView>

@@ -1,10 +1,10 @@
-package com.example.irregularverbs.mvp.presenters
+package com.example.irregularverbs.mvp.verb_quiz
 
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
-import com.example.irregularverbs.gateway.local.LocalVerbGateway
+import com.example.irregularverbs.gateway.realm.RealmVerbGateway
 import com.example.irregularverbs.mvp.models.Verb
-import com.example.irregularverbs.mvp.views.VerbQuizView
+import com.example.irregularverbs.mvp.models.Verb.Companion.AMOUNT_OF_ANSWERS_TO_COMPLETE
 import java.util.*
 import kotlin.random.Random
 
@@ -18,18 +18,41 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
     private var totalAmountOfCorrectAnswers = 0
     private var progressPercent: Float = 0f
 
-    fun initVerbs() {
-//        verbs = LocalVerbGateway().loadVerbs(level)
-        verbs.shuffle()
-    }
 
     fun okButtonWasClicked(result: String) {
         checkVerbIsCorrectly(result)
         getNewVerb()
     }
 
-    fun setLevel(level: Int) {
+    fun loadIrregularVerbs(level: Int) {
+        setLevel(level)
+        initVerbs()
+        getNewVerb()
+        loadCurrentProgress()
+    }
+
+    private fun setLevel(level: Int) {
         this.level = level
+    }
+
+    private fun initVerbs() {
+        viewState.initRealm()
+        verbs = RealmVerbGateway().loadVerbs(level)
+        verbs.shuffle()
+    }
+
+    private fun getNewVerb() {
+        formOfVerb = Random.nextInt(2, 4)
+        viewState.displayNewVerb(getCurrentVerb(), formOfVerb)
+
+        checkIsVerbsAreAnswered()
+    }
+
+    private fun loadCurrentProgress() {
+        verbs.forEach { verb ->
+            totalAmountOfCorrectAnswers += verb.amountOfCorrectAnswers
+        }
+        displayProgress()
     }
 
     private fun checkVerbIsCorrectly(result: String) {
@@ -37,13 +60,13 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
             if (result == getCurrentVerb().secondForm) {
                 changeValuesAfterRightAnswer()
             } else {
-                viewState.displayIfAnswerWrong(getCurrentVerb())
+                changeValuesAfterWrongAnswer()
             }
         } else if (formOfVerb == 3) {
             if (result == getCurrentVerb().thirdForm) {
                 changeValuesAfterRightAnswer()
             } else {
-                viewState.displayIfAnswerWrong(getCurrentVerb())
+                changeValuesAfterWrongAnswer()
             }
         }
         incrementVerbIndex()
@@ -51,23 +74,23 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
 
     private fun changeValuesAfterRightAnswer() {
         viewState.displayIfAnswerCorrect()
-        getCurrentVerb().amountOfCorrectAnswers++
+        viewState.initRealm()
+        RealmVerbGateway().changeAmountOfAnswers(getCurrentVerb())
         totalAmountOfCorrectAnswers++
         displayProgress()
     }
 
-    fun getNewVerb() {
-        formOfVerb = Random.nextInt(2, 4)
-        viewState.displayNewVerb(getCurrentVerb(), formOfVerb)
-
-        checkIsVerbsAreAnswered()
+    private fun changeValuesAfterWrongAnswer() {
+        viewState.displayIfAnswerWrong(getCurrentVerb())
+        viewState.initRealm()
+        RealmVerbGateway().changeAmountOfMistakes(getCurrentVerb())
     }
 
     private fun checkIsVerbsAreAnswered() {
-        if (getCurrentVerb().amountOfCorrectAnswers == 2) {
+        if (getCurrentVerb().amountOfCorrectAnswers == AMOUNT_OF_ANSWERS_TO_COMPLETE) {
             var isCompleted = true
             for (verb in verbs) {
-                if (verb.amountOfCorrectAnswers != 2) {
+                if (verb.amountOfCorrectAnswers != AMOUNT_OF_ANSWERS_TO_COMPLETE) {
                     incrementVerbIndex()
                     getNewVerb()
                     isCompleted = false
@@ -81,7 +104,7 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
     }
 
     private fun displayProgress() {
-        progressPercent = 100 / (verbs.size * 2).toFloat() * totalAmountOfCorrectAnswers.toFloat()
+        progressPercent = 100 / (verbs.size * AMOUNT_OF_ANSWERS_TO_COMPLETE).toFloat() * totalAmountOfCorrectAnswers.toFloat()
         viewState.displayProgress(progressPercent)
     }
 
