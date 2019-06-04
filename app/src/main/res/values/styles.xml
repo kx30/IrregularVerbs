@@ -43,6 +43,7 @@
         <item name="android:background">@color/colorPrimary</item>
         <item name="android:textSize">20sp</item>
         <item name="android:textColor">@color/whitish</item>
+        <item name="colorControlNormal">@color/whitish</item>
     </style>
 
     <style name="progressPercentTextView">

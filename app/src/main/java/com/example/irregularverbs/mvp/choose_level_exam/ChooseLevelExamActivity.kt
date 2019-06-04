@@ -4,14 +4,13 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
-import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
+import com.example.irregularverbs.mvp.base.BaseActivity
 import com.example.irregularverbs.mvp.verb_quiz.VerbQuizActivity
 import kotlinx.android.synthetic.main.activity_choose_complexity_exam.*
 
-class ChooseLevelExamActivity : MvpAppCompatActivity(),
-    ChooseLevelExamView {
+class ChooseLevelExamActivity : BaseActivity(), ChooseLevelExamView {
 
     @InjectPresenter
     lateinit var chooseLevelExamPresenter: ChooseLevelExamPresenter
@@ -22,6 +21,7 @@ class ChooseLevelExamActivity : MvpAppCompatActivity(),
         setContentView(R.layout.activity_choose_complexity_exam)
         chooseLevelExamPresenter.initPresenter()
         setListeners()
+        initActionBar()
     }
 
     override fun onRestart() {
@@ -96,6 +96,10 @@ class ChooseLevelExamActivity : MvpAppCompatActivity(),
         }
     }
 
+    override fun startVerbQuizActivity(level: Int) {
+        startActivity(Intent(this, VerbQuizActivity::class.java).putExtra(getString(R.string.TAG_LEVEL), level))
+    }
+
     private fun buildAlertDialog(level: Int) {
         AlertDialog.Builder(this)
             .setTitle("Warning")
@@ -109,9 +113,5 @@ class ChooseLevelExamActivity : MvpAppCompatActivity(),
                 dialog.cancel()
             }
             .show()
-    }
-
-    override fun startVerbQuizActivity(level: Int) {
-        startActivity(Intent(this, VerbQuizActivity::class.java).putExtra(getString(R.string.TAG_LEVEL), level))
     }
 }

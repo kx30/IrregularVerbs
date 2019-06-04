@@ -9,6 +9,7 @@ import com.example.irregularverbs.mvp.models.Verb
 import kotlinx.android.synthetic.main.verb_item.view.*
 
 class VerbAdapter(private val verbList: List<Verb>) : RecyclerView.Adapter<VerbViewHolder>() {
+
     override fun onCreateViewHolder(view: ViewGroup, position: Int): VerbViewHolder {
         val itemView = LayoutInflater.from(view.context).inflate(R.layout.verb_item, view, false)
         return VerbViewHolder(itemView)

@@ -4,15 +4,15 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
+import com.example.irregularverbs.mvp.base.BaseActivity
 import com.example.irregularverbs.mvp.verb_list.VerbListActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_progress.*
 import java.text.DecimalFormat
 
-class ProgressActivity : MvpAppCompatActivity(), ProgressView {
+class ProgressActivity : BaseActivity(), ProgressView {
 
     @InjectPresenter
     lateinit var progressPresenter: ProgressPresenter
@@ -23,6 +23,7 @@ class ProgressActivity : MvpAppCompatActivity(), ProgressView {
         setContentView(R.layout.activity_progress)
         progressPresenter.setCurrentProgress()
         setListeners()
+        initActionBar()
         initRealm()
         progressPresenter.getTypeOfSkill()
     }

@@ -4,13 +4,14 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
-import com.arellomobile.mvp.MvpAppCompatActivity
+import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
 import com.example.irregularverbs.mvp.adapter.VerbAdapter
+import com.example.irregularverbs.mvp.base.BaseActivity
 import kotlinx.android.synthetic.main.activity_verbs_list.*
 
-class VerbListActivity : MvpAppCompatActivity(), VerbListView {
+class VerbListActivity : BaseActivity(), VerbListView {
 
     @InjectPresenter
     lateinit var verbListPresenter: VerbListPresenter
@@ -19,20 +20,15 @@ class VerbListActivity : MvpAppCompatActivity(), VerbListView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verbs_list)
+        initActionBar()
         setChosenLevelInPresenter()
         verbListPresenter.initPresenter()
-        initActionBar()
         initRecyclerView()
     }
 
     override fun setChosenLevelInPresenter() {
         val level = intent.getIntExtra(getString(R.string.TAG_LEVEL), 0)
         verbListPresenter.setLevel(level)
-    }
-
-    private fun initActionBar() {
-        setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.title = ""
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

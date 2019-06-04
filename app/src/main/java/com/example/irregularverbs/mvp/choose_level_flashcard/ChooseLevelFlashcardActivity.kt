@@ -3,15 +3,15 @@ package com.example.irregularverbs.mvp.choose_level_flashcard
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
+import com.example.irregularverbs.mvp.base.BaseActivity
 import com.example.irregularverbs.mvp.flashcard.FlashcardActivity
 import com.example.irregularverbs.mvp.verb_list.VerbListActivity
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_choose_level_flashcard.*
 
-class ChooseLevelFlashcardActivity : MvpAppCompatActivity(), ChooseLevelFlashcardView {
+class ChooseLevelFlashcardActivity : BaseActivity(), ChooseLevelFlashcardView {
 
     @InjectPresenter
     lateinit var chooseLevelFlashcardPresenter: ChooseLevelFlashcardPresenter
@@ -22,6 +22,7 @@ class ChooseLevelFlashcardActivity : MvpAppCompatActivity(), ChooseLevelFlashcar
         setContentView(R.layout.activity_choose_level_flashcard)
         setListeners()
         initRealm()
+        initActionBar()
         chooseLevelFlashcardPresenter.getTypeOfSkill()
     }
 

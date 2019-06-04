@@ -1,8 +1,6 @@
 package com.example.irregularverbs.mvp.verb_quiz
 
 import com.arellomobile.mvp.MvpView
-import com.arellomobile.mvp.viewstate.strategy.OneExecutionStateStrategy
-import com.arellomobile.mvp.viewstate.strategy.StateStrategyType
 import com.example.irregularverbs.mvp.models.Verb
 
 interface VerbQuizView: MvpView {

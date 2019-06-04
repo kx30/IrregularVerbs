@@ -2,11 +2,12 @@ package com.example.irregularverbs.mvp.verb_quiz
 
 import android.annotation.SuppressLint
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.Toast
-import com.arellomobile.mvp.MvpAppCompatActivity
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
+import com.example.irregularverbs.mvp.base.BaseActivity
 import com.example.irregularverbs.mvp.models.Verb
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_verb_quiz.*
@@ -14,7 +15,8 @@ import java.text.DecimalFormat
 import java.util.*
 import kotlin.math.roundToInt
 
-class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
+
+class VerbQuizActivity : BaseActivity(), VerbQuizView {
 
     @InjectPresenter
     lateinit var verbQuizPresenter: VerbQuizPresenter
@@ -23,6 +25,7 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verb_quiz)
+        initActionBar()
         initPresenter()
         setListeners()
     }
@@ -34,8 +37,10 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
 
     private fun setListeners() {
         okButton.setOnClickListener {
-            verbQuizPresenter.okButtonWasClicked(currentVerbEditText.text.toString().toLowerCase())
-            currentVerbEditText.text.clear()
+            if (currentVerbEditText.text.isNotEmpty()) {
+                verbQuizPresenter.okButtonWasClicked(currentVerbEditText.text.toString().toLowerCase())
+                currentVerbEditText.text.clear()
+            }
         }
     }
 
@@ -52,10 +57,14 @@ class VerbQuizActivity : MvpAppCompatActivity(), VerbQuizView {
 
     override fun displayIfAnswerCorrect() {
         setInvisibleTextViews()
-        okButton.setBackgroundResource(R.drawable.green_circle_button)
-        Timer().schedule(object: TimerTask() {
+        okButton.setBackgroundResource(com.example.irregularverbs.R.drawable.green_circle_button)
+
+        val handler = Handler()
+        Timer().schedule(object : TimerTask() {
             override fun run() {
-                okButton.setBackgroundResource(R.drawable.circle_button)
+                handler.post {
+                    okButton.setBackgroundResource(R.drawable.circle_button)
+                }
             }
         }, 1000)
     }

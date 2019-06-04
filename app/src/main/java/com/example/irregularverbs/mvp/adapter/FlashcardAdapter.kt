@@ -50,8 +50,4 @@ class FlashcardViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             flipView.flipTheView()
         }
     }
-
-//    val firstForm = itemView.firstFormOfVerbItemTextView
-//    val secondForm = itemView.secondFormOfVerbItemTextView
-//    val thirdForm = itemView.thirdFormOfVerbItemTextView
 }
