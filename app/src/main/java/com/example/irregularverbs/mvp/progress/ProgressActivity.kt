@@ -29,7 +29,9 @@ class ProgressActivity : BaseActivity(), ProgressView {
     }
 
     override fun startVerbListActivity(level: Int?) {
-        startActivity(Intent(this, VerbListActivity::class.java).putExtra(getString(R.string.TAG_LEVEL), level))
+        val intent = Intent(this, VerbListActivity::class.java)
+        val tagLevel = getString(R.string.TAG_LEVEL)
+        startActivity(intent.putExtra(tagLevel, tagLevel))
     }
 
     override fun initRealm() {
@@ -37,18 +39,20 @@ class ProgressActivity : BaseActivity(), ProgressView {
     }
 
     private fun setListeners() {
+        val dialog = AlertDialog
+            .Builder(this)
+            .setTitle("Warning")
+            .setMessage("Are you sure want to delete all of your progress?")
+            .setPositiveButton("Yes") { _, _ ->
+                progressPresenter.resetAllProgress()
+                finish()
+            }
+            .setNegativeButton("No") { dialog, _ ->
+                dialog.cancel()
+            }
+
         resetProgressButton.setOnClickListener {
-            AlertDialog.Builder(this)
-                .setTitle("Warning")
-                .setMessage("Are you sure want to delete all of your progress?")
-                .setPositiveButton("Yes") { _, _ ->
-                    progressPresenter.resetAllProgress()
-                    finish()
-                }
-                .setNegativeButton("No") { dialog, _ ->
-                    dialog.cancel()
-                }
-                .show()
+            dialog.show()
         }
         tooBadButton.setOnClickListener {
             showAlertDialog()
@@ -61,7 +65,7 @@ class ProgressActivity : BaseActivity(), ProgressView {
         }
     }
 
-    private fun showAlertDialog() {
+    private fun showAlertDialog() { //TODO use your brain
         AlertDialog.Builder(this)
             .setTitle(getString(R.string.app_name))
             .setMessage("You have no verbs here")
@@ -115,6 +119,11 @@ class ProgressActivity : BaseActivity(), ProgressView {
     override fun setExactlyKnownTextView(amountOfExactlyKnownTextView: String) {
         exactlyKnownTextView.text =
             "${resources.getString(R.string.exactly_known)} $amountOfExactlyKnownTextView irregular verbs"
+    }
+
+    fun unlockResultButtons() {
+
+        val backgroundRes = R.drawable.base_button_background
     }
 
     override fun initTooBadButton() {

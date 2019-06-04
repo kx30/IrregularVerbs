@@ -29,7 +29,7 @@ class VerbListPresenter : MvpPresenter<VerbListView>() {
 
     fun initSearchLogic(newText: String?) {
         clearSearchResultVerbsList()
-        if (!newText.isNullOrEmpty()) {
+        if (!newText.isNullOrBlank()) {
             val search = newText.toLowerCase()
             updateSearchResultVerbsByTypedText(search)
         } else {
@@ -57,10 +57,9 @@ class VerbListPresenter : MvpPresenter<VerbListView>() {
         searchResultVerbs.addAll(verbList)
     }
 
-    fun setLevel(level: Int) {
-        this.level = level
+    fun initAdapter() {
+        viewState.initAdapter(searchResultVerbs) //TODO
     }
-
     fun getSearchResultVerbs(): ArrayList<Verb> {
         return searchResultVerbs
     }

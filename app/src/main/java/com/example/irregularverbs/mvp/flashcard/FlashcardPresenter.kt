@@ -16,7 +16,12 @@ class FlashcardPresenter: MvpPresenter<FlashcardView>() {
         this.level = level
     }
 
-    fun getVerbList() {
+    override fun onFirstViewAttach() {
+        getVerbList()
+        super.onFirstViewAttach()
+    }
+
+    private fun getVerbList() {
         viewState.initRealm()
         verbList = RealmVerbGateway().loadVerbs(level)
         viewState.initRecyclerView(verbList)

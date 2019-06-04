@@ -8,34 +8,43 @@ import com.example.irregularverbs.R
 import com.example.irregularverbs.mvp.models.Verb
 import kotlinx.android.synthetic.main.verb_item.view.*
 
-class VerbAdapter(private val verbList: List<Verb>) : RecyclerView.Adapter<VerbViewHolder>() {
+class VerbAdapter(private val verbList: List<Verb>) : RecyclerView.Adapter<VerbAdapter.VerbViewHolder>() {
 
     override fun onCreateViewHolder(view: ViewGroup, position: Int): VerbViewHolder {
-        val itemView = LayoutInflater.from(view.context).inflate(R.layout.verb_item, view, false)
-        return VerbViewHolder(itemView)
+        return VerbViewHolder(
+            LayoutInflater.from(view.context).inflate(
+                R.layout.verb_item,
+                view,
+                false
+            )
+        )
     }
 
     override fun onBindViewHolder(holder: VerbViewHolder, position: Int) {
-        val currentVerb = verbList[position]
-        holder.firstForm.text = currentVerb.firstForm
-        holder.secondForm.text = currentVerb.secondForm
-        holder.thirdForm.text = currentVerb.thirdForm
-
-        if (position % 2 == 1) {
-            holder.itemView.setBackgroundResource(R.color.colorPrimary)
-        } else {
-            holder.itemView.setBackgroundResource(R.color.colorPrimaryDark)
-        }
+        holder.onBind(position, verbList[position])
     }
 
     override fun getItemCount(): Int {
         return verbList.size
     }
-}
 
-class VerbViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+    inner class VerbViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        lateinit var currentVerb: Verb //TODO ASK SLAVIK
 
-    val firstForm = itemView.firstFormOfVerbItemTextView
-    val secondForm = itemView.secondFormOfVerbItemTextView
-    val thirdForm = itemView.thirdFormOfVerbItemTextView
+        fun onBind(position: Int, currentVerb: Verb) {
+            this.currentVerb = currentVerb
+
+            with(itemView) {
+                firstFormOfVerbItemTextView.text = currentVerb.firstForm
+                secondFormOfVerbItemTextView.text = currentVerb.secondForm
+                thirdFormOfVerbItemTextView.text = currentVerb.thirdForm
+
+                if (position % 2 == 1) {
+                    setBackgroundResource(R.color.colorPrimary)
+                } else {
+                    setBackgroundResource(R.color.colorPrimaryDark)
+                }
+            }
+        }
+    }
 }

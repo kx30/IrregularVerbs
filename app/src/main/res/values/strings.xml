@@ -1,7 +1,6 @@
 <resources>
     <string name="app_name">Irregular verbs</string>
 
-    <string name="v2">v2</string>
     <string name="v3">v3</string>
 
     <string name="TAG_LEVEL">level</string>
@@ -10,4 +9,13 @@
     <string name="reset_progress">If you want to reset your all progress, use this button. If you reset, it cannot be undone</string>
     <string name="exactly_known">We asked you these many times. And we are sure that you learned there</string>
     <string name="so_so">You are about to learn</string>
+    <string name="v2">v2</string>
+    <array name="someArray">
+        <item>
+            <firstForm>arise</firstForm>
+            <firstForm>arise</firstForm>
+            <firstForm>arise</firstForm>
+            <firstForm>arise</firstForm>
+        </item>
+    </array>
 </resources>

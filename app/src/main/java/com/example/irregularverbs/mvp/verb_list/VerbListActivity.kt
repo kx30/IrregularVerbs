@@ -4,14 +4,13 @@ import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.SearchView
 import android.view.Menu
-import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
-import com.example.irregularverbs.mvp.adapter.VerbAdapter
 import com.example.irregularverbs.mvp.base.BaseActivity
+import com.example.irregularverbs.mvp.utils.CustomOnQueryTextListener
 import kotlinx.android.synthetic.main.activity_verbs_list.*
 
-class VerbListActivity : BaseActivity(), VerbListView {
+class VerbListActivity : BaseActivity(), VerbListView, IrregularThings {
 
     @InjectPresenter
     lateinit var verbListPresenter: VerbListPresenter
@@ -21,26 +20,21 @@ class VerbListActivity : BaseActivity(), VerbListView {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_verbs_list)
         initActionBar()
-        setChosenLevelInPresenter()
-        verbListPresenter.initPresenter()
+        val startLevel = getChosenLevelForVerbs()
+        verbListPresenter.initPresenter(startLevel) //TODO add parametr
         initRecyclerView()
     }
 
-    override fun setChosenLevelInPresenter() {
-        val level = intent.getIntExtra(getString(R.string.TAG_LEVEL), 0)
-        verbListPresenter.setLevel(level)
+    override fun getChosenLevelForVerbs(): Int {
+        //        verbListPresenter.setLevel(level)
+        return intent.getIntExtra(getString(R.string.TAG_LEVEL), 0)
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
         menuInflater.inflate(R.menu.search_menu, menu)
         val searchItem = menu.findItem(R.id.menu_search)
         val searchView = searchItem.actionView as SearchView
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
-
-            override fun onQueryTextSubmit(p0: String?): Boolean {
-                return true
-            }
-
+        searchView.setOnQueryTextListener(object : CustomOnQueryTextListener() {
             override fun onQueryTextChange(newText: String?): Boolean {
                 verbListPresenter.initSearchLogic(newText)
                 return true
@@ -50,8 +44,11 @@ class VerbListActivity : BaseActivity(), VerbListView {
     }
 
     override fun notifyDataSetChangedAdapter() {
-        verbListRecyclerView.adapter = VerbAdapter(verbListPresenter.getSearchResultVerbs())
+        verbListPresenter.initAdapter()
     }
+
+//    verbListRecyclerView.adapter = VerbAdapter(verbListPresenter.getSearchResultVerbs())
+
 
     private fun initRecyclerView() {
         verbListRecyclerView.layoutManager = LinearLayoutManager(this)

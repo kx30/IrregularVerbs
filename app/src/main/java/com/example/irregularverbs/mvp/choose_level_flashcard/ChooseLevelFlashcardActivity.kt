@@ -23,7 +23,7 @@ class ChooseLevelFlashcardActivity : BaseActivity(), ChooseLevelFlashcardView {
         setListeners()
         initRealm()
         initActionBar()
-        chooseLevelFlashcardPresenter.getTypeOfSkill()
+        chooseLevelFlashcardPresenter.getTypeOfSkill() //TODO firstViewAttach
     }
 
     private fun setListeners() {

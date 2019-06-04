@@ -18,15 +18,18 @@ interface VerbGateway {
     fun getAmountOfWrongAnswers(): Int
 }
 
-class RealmVerbGateway : VerbGateway {
+
+
+class RealmVerbGateway() : VerbGateway { //TODO DAGGER + APPLICATION +++++++ USE  FRAGMENTS INSTEAD ACTIVITIES
+
+    private val verbList = ArrayList<Verb>()
 
     companion object {
         private const val TAG = "RealmVerbGateway"
         const val TAG_LEVEL = "level"
-        val verbList = ArrayList<Verb>()
     }
 
-    private fun initVerbs() {
+    private fun initVerbs() { //TODO MOVE TO RESOURCE
         verbList.add(Verb("arise", "arose", "arisen", 1, "возникать"))
         verbList.add(Verb("awake", "awoke", "awoken", 1, "пробуждаться"))
         verbList.add(Verb("be", "was", "been", 1, "быть"))

@@ -1,14 +1,13 @@
 package com.example.irregularverbs.mvp.verb_quiz
 
-import android.annotation.SuppressLint
 import android.os.Bundle
-import android.os.Handler
 import android.view.View
 import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
 import com.example.irregularverbs.mvp.base.BaseActivity
 import com.example.irregularverbs.mvp.models.Verb
+import com.example.irregularverbs.mvp.utils.visible
 import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_verb_quiz.*
 import java.text.DecimalFormat
@@ -37,36 +36,41 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
 
     private fun setListeners() {
         okButton.setOnClickListener {
-            if (currentVerbEditText.text.isNotEmpty()) {
-                verbQuizPresenter.okButtonWasClicked(currentVerbEditText.text.toString().toLowerCase())
+            if (currentVerbEditText.text.isNotEmpty()) { //TODO isNotBlank
+                with(verbQuizPresenter) {
+                    checkVerbIsCorrectly(currentVerbEditText.text.toString().toLowerCase())
+                    getNewVerb()
+                }
                 currentVerbEditText.text.clear()
             }
         }
     }
 
-    @SuppressLint("SetTextI18n")
     override fun displayNewVerb(verb: Verb, formOfVerb: Int) {
         currentVerbTextView.text = verb.firstForm
         translateTextView.text = verb.translate
         if (formOfVerb == 2) {
-            currentFormOfVerbTextView.text = "v2"
+            currentFormOfVerbTextView.text = getString(R.string.v2)
         } else {
-            currentFormOfVerbTextView.text = "v3"
+            currentFormOfVerbTextView.text = "v3" //TODO FIX YELLOW WARNING
         }
     }
 
     override fun displayIfAnswerCorrect() {
         setInvisibleTextViews()
-        okButton.setBackgroundResource(com.example.irregularverbs.R.drawable.green_circle_button)
+        okButton.setBackgroundResource(R.drawable.green_circle_button)
 
-        val handler = Handler()
         Timer().schedule(object : TimerTask() {
             override fun run() {
-                handler.post {
+//                okButton.post {
+//                    okButton.setBackgroundResource(R.drawable.circle_button)
+//                }
+                runOnUiThread {
                     okButton.setBackgroundResource(R.drawable.circle_button)
                 }
             }
         }, 1000)
+
     }
 
     override fun displayIfAnswerWrong(verb: Verb) {
@@ -81,7 +85,6 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
         Realm.init(this)
     }
 
-    @SuppressLint("SetTextI18n")
     override fun displayProgress(progressPercent: Float) {
         progressBar.progress = progressPercent.roundToInt()
         currentProgressInPercent.text = "${DecimalFormat("#.#").format(progressPercent)}%"
@@ -96,6 +99,7 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
     }
 
     private fun setVisibleTextViews() {
+        crossedWrongWordTextView.visible(true)
         crossedWrongWordTextView.visibility = View.VISIBLE
         wrongAnswerTextView.visibility = View.VISIBLE
         firstFormOfVerbTextView.visibility = View.VISIBLE
@@ -104,6 +108,7 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
     }
 
     private fun setInvisibleTextViews() {
+        crossedWrongWordTextView.visible(false)
         crossedWrongWordTextView.visibility = View.INVISIBLE
         wrongAnswerTextView.visibility = View.INVISIBLE
         firstFormOfVerbTextView.visibility = View.INVISIBLE

@@ -7,7 +7,6 @@ import com.example.irregularverbs.gateway.realm.RealmVerbGateway
 @InjectViewState
 class LauncherPresenter: MvpPresenter<LauncherView>() {
 
-
     fun saveVerbsInRealm() {
         RealmVerbGateway().saveVerbs()
     }

@@ -2,7 +2,6 @@ package com.example.irregularverbs.mvp.flashcard
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
-import android.view.MenuItem
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
 import com.example.irregularverbs.mvp.adapter.FlashcardAdapter
@@ -23,7 +22,6 @@ class FlashcardActivity : BaseActivity(), FlashcardView {
         initActionBar()
         val level = intent.getIntExtra(getString(R.string.TAG_LEVEL), 1)
         flashcardPresenter.setLevel(level)
-        flashcardPresenter.getVerbList()
     }
 
     override fun initRecyclerView(verbList: ArrayList<Verb>) {

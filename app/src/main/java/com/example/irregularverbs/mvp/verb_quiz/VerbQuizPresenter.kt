@@ -16,13 +16,8 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
     private var currentVerbIndex = 0
     private var formOfVerb: Int = 0
     private var totalAmountOfCorrectAnswers = 0
-    private var progressPercent: Float = 0f
+    private var progressPercent: Float = 0f //TODO DELETE UNNECESSARY TYPES
 
-
-    fun okButtonWasClicked(result: String) {
-        checkVerbIsCorrectly(result)
-        getNewVerb()
-    }
 
     fun loadIrregularVerbs(level: Int) {
         setLevel(level)
@@ -41,11 +36,12 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
         verbs.shuffle()
     }
 
-    private fun getNewVerb() {
+    fun getNewVerb() {
         formOfVerb = Random.nextInt(2, 4)
-        viewState.displayNewVerb(getCurrentVerb(), formOfVerb)
+        val currentVerb = getCurrentVerb()
+        viewState.displayNewVerb(currentVerb, formOfVerb)
 
-        checkIsVerbsAreAnswered()
+        checkIsVerbsAreAnswered(currentVerb)
     }
 
     private fun loadCurrentProgress() {
@@ -55,7 +51,7 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
         displayProgress()
     }
 
-    private fun checkVerbIsCorrectly(result: String) {
+    fun checkVerbIsCorrectly(result: String) {
         if (formOfVerb == 2) {
             if (result == getCurrentVerb().secondForm) {
                 changeValuesAfterRightAnswer()
@@ -86,8 +82,8 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
         RealmVerbGateway().changeAmountOfMistakes(getCurrentVerb())
     }
 
-    private fun checkIsVerbsAreAnswered() {
-        if (getCurrentVerb().amountOfCorrectAnswers == AMOUNT_OF_ANSWERS_TO_COMPLETE) {
+    private fun checkIsVerbsAreAnswered(currentVerb: Verb) {
+        if (currentVerb.amountOfCorrectAnswers == AMOUNT_OF_ANSWERS_TO_COMPLETE) {
             var isCompleted = true
             for (verb in verbs) {
                 if (verb.amountOfCorrectAnswers != AMOUNT_OF_ANSWERS_TO_COMPLETE) {
@@ -104,7 +100,7 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
     }
 
     private fun displayProgress() {
-        progressPercent = 100 / (verbs.size * AMOUNT_OF_ANSWERS_TO_COMPLETE).toFloat() * totalAmountOfCorrectAnswers.toFloat()
+        progressPercent = (100f / (verbs.size * AMOUNT_OF_ANSWERS_TO_COMPLETE)) * totalAmountOfCorrectAnswers
         viewState.displayProgress(progressPercent)
     }
 
@@ -117,7 +113,5 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
         }
     }
 
-    private fun getCurrentVerb(): Verb {
-        return verbs[currentVerbIndex]
-    }
+    private fun getCurrentVerb() = verbs[currentVerbIndex]
 }

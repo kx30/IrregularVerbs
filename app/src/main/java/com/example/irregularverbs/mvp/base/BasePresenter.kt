@@ -1,16 +1,22 @@
 package com.example.irregularverbs.mvp.base
 
+import android.view.View
 import com.arellomobile.mvp.MvpPresenter
 import com.arellomobile.mvp.MvpView
 import com.example.irregularverbs.gateway.realm.RealmVerbGateway
+import com.example.irregularverbs.mvp.adapter.VerbAdapter
 import com.example.irregularverbs.mvp.models.Verb
 
 open class BasePresenter<T : MvpView> : MvpPresenter<T>() {
+
     private var verbList = ArrayList<Verb>()
     private var tooBadVerbList = ArrayList<Verb>()
     private var soSoVerbList = ArrayList<Verb>()
     private var exactlyKnownVerbList = ArrayList<Verb>()
-    private val TAG = "BasePresenter"
+    companion object {
+        const val PRESENTER_TAG = "BasePresenter"
+    }
+
 
     fun getTypeOfSkill() {
         loadVerbs()
@@ -25,13 +31,13 @@ open class BasePresenter<T : MvpView> : MvpPresenter<T>() {
                 exactlyKnownVerbList.add(verb)
             }
         }
-        if (!tooBadVerbList.isEmpty()) {
-            (viewState as BaseView).initTooBadButton()
+        if (tooBadVerbList.isNotEmpty()) {
+            (viewState as BaseView).unlockResultButton(1) //TODO
         }
-        if (!soSoVerbList.isEmpty()) {
+        if (soSoVerbList.isNotEmpty()) {
             (viewState as BaseView).initSoSoButton()
         }
-        if (!exactlyKnownVerbList.isEmpty()) {
+        if (exactlyKnownVerbList.isNotEmpty()) {
             (viewState as BaseView).initExactlyKnownButton()
         }
     }

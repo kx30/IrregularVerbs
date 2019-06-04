@@ -74,7 +74,7 @@ class ChooseLevelExamActivity : BaseActivity(), ChooseLevelExamView {
 
     override fun thirdLevelIsCompleted() {
         thirdLevelButton.setBackgroundResource(R.drawable.completed_button)
-        thirdLevelButton.text = "Completed"
+        thirdLevelButton.text = "Completed" //TODO CLEAR
         thirdLevelButton.setOnClickListener {
             buildAlertDialog(3)
         }

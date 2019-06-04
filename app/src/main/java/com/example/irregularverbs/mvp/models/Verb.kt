@@ -3,9 +3,9 @@ package com.example.irregularverbs.mvp.models
 import io.realm.RealmObject
 import io.realm.annotations.RealmClass
 
-@RealmClass
+@RealmClass //TODO CHECK USING SERIALIZABLE
 open class Verb(
-    var firstForm: String = "",
+    var firstForm: String,
     var secondForm: String = "",
     var thirdForm: String = "",
     var level: Int = 1,
