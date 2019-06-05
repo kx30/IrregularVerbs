@@ -1,26 +1,11 @@
 package com.example.irregularverbs.gateway.realm
 
 import android.util.Log
+import com.example.irregularverbs.gateway.VerbGateway
 import com.example.irregularverbs.mvp.models.Verb
 import io.realm.Realm
 
-interface VerbGateway {
-    fun loadVerbs(level: Int?): ArrayList<Verb>
-    fun loadTooBadVerbs(): ArrayList<Verb>
-    fun loadSoSoBVerbs(): ArrayList<Verb>
-    fun loadExactlyKnownVerbs(): ArrayList<Verb>
-    fun saveVerbs()
-    fun changeAmountOfAnswers(currentVerb: Verb)
-    fun changeAmountOfMistakes(currentVerb: Verb)
-    fun deleteLevelProgress(level: Int)
-    fun resetAllProgress()
-    fun getAmountOfRightAnswers(): Int
-    fun getAmountOfWrongAnswers(): Int
-}
-
-
-
-class RealmVerbGateway() : VerbGateway { //TODO DAGGER + APPLICATION +++++++ USE  FRAGMENTS INSTEAD ACTIVITIES
+class RealmVerbGateway : VerbGateway { //TODO DAGGER + APPLICATION +++++++ USE  FRAGMENTS INSTEAD ACTIVITIES
 
     private val verbList = ArrayList<Verb>()
 

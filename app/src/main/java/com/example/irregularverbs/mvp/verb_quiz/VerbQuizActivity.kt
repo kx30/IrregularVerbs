@@ -12,7 +12,6 @@ import io.realm.Realm
 import kotlinx.android.synthetic.main.activity_verb_quiz.*
 import java.text.DecimalFormat
 import java.util.*
-import kotlin.math.roundToInt
 
 
 class VerbQuizActivity : BaseActivity(), VerbQuizView {
@@ -34,9 +33,10 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
         verbQuizPresenter.loadIrregularVerbs(level)
     }
 
+    //TODO isNotBlank - FIXED
     private fun setListeners() {
         okButton.setOnClickListener {
-            if (currentVerbEditText.text.isNotEmpty()) { //TODO isNotBlank
+            if (currentVerbEditText.text.isNotBlank()) {
                 with(verbQuizPresenter) {
                     checkVerbIsCorrectly(currentVerbEditText.text.toString().toLowerCase())
                     getNewVerb()
@@ -52,7 +52,7 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
         if (formOfVerb == 2) {
             currentFormOfVerbTextView.text = getString(R.string.v2)
         } else {
-            currentFormOfVerbTextView.text = "v3" //TODO FIX YELLOW WARNING
+            currentFormOfVerbTextView.text = getString(R.string.v3)
         }
     }
 
@@ -60,6 +60,7 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
         setInvisibleTextViews()
         okButton.setBackgroundResource(R.drawable.green_circle_button)
 
+        // TODO CHECK
         Timer().schedule(object : TimerTask() {
             override fun run() {
 //                okButton.post {
@@ -85,10 +86,13 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
         Realm.init(this)
     }
 
+    //TODO FIX YELLOW THINGS - FIXED
     override fun displayProgress(progressPercent: Float) {
-        progressBar.progress = progressPercent.roundToInt()
-        currentProgressInPercent.text = "${DecimalFormat("#.#").format(progressPercent)}%"
+        progressBar.progress = progressPercent.toInt()
+        val progressInPercent = "${DecimalFormat("#.#").format(progressPercent)}%"
+        currentProgressInPercent.text = progressInPercent
     }
+
 
     override fun showToast(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
@@ -100,19 +104,17 @@ class VerbQuizActivity : BaseActivity(), VerbQuizView {
 
     private fun setVisibleTextViews() {
         crossedWrongWordTextView.visible(true)
-        crossedWrongWordTextView.visibility = View.VISIBLE
-        wrongAnswerTextView.visibility = View.VISIBLE
-        firstFormOfVerbTextView.visibility = View.VISIBLE
-        secondFormOfVerbTextView.visibility = View.VISIBLE
-        thirdFormOfVerbTextView.visibility = View.VISIBLE
+        wrongAnswerTextView.visible(true)
+        firstFormOfVerbTextView.visible(true)
+        secondFormOfVerbTextView.visible(true)
+        thirdFormOfVerbTextView.visible(true)
     }
 
     private fun setInvisibleTextViews() {
         crossedWrongWordTextView.visible(false)
-        crossedWrongWordTextView.visibility = View.INVISIBLE
-        wrongAnswerTextView.visibility = View.INVISIBLE
-        firstFormOfVerbTextView.visibility = View.INVISIBLE
-        secondFormOfVerbTextView.visibility = View.INVISIBLE
-        thirdFormOfVerbTextView.visibility = View.INVISIBLE
+        wrongAnswerTextView.visible(false)
+        firstFormOfVerbTextView.visible(false)
+        secondFormOfVerbTextView.visible(false)
+        thirdFormOfVerbTextView.visible(false)
     }
 }

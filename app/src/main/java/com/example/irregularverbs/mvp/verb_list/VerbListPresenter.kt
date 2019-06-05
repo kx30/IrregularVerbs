@@ -10,15 +10,14 @@ class VerbListPresenter : MvpPresenter<VerbListView>() {
 
     private val searchResultVerbs = ArrayList<Verb>()
     private var verbList = ArrayList<Verb>()
-    private var level: Int = 0
 
 
-    fun initPresenter() {
-        loadVerbList()
+    fun initPresenter(level: Int) {
+        loadVerbList(level)
         fillSearchResultVerbs()
     }
 
-    private fun loadVerbList() {
+    private fun loadVerbList(level: Int) {
         when (level) {
             0 -> verbList = RealmVerbGateway().loadVerbs(null)
             1 -> verbList = RealmVerbGateway().loadTooBadVerbs()
@@ -58,9 +57,6 @@ class VerbListPresenter : MvpPresenter<VerbListView>() {
     }
 
     fun initAdapter() {
-        viewState.initAdapter(searchResultVerbs) //TODO
-    }
-    fun getSearchResultVerbs(): ArrayList<Verb> {
-        return searchResultVerbs
+        viewState.initAdapter(searchResultVerbs) //TODO - FIXED
     }
 }

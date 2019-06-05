@@ -4,7 +4,7 @@ import android.view.MenuItem
 import com.arellomobile.mvp.MvpAppCompatActivity
 import com.example.irregularverbs.R
 
-open class BaseActivity: MvpAppCompatActivity() { //TODO FIX YELLOW WARNING
+open class BaseActivity: MvpAppCompatActivity() { //TODO FIX YELLOW WARNING - FIXED
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         if (item?.itemId == android.R.id.home) {
@@ -15,8 +15,13 @@ open class BaseActivity: MvpAppCompatActivity() { //TODO FIX YELLOW WARNING
 
     protected fun initActionBar() {
         setSupportActionBar(findViewById(R.id.toolbar))
-        supportActionBar?.title = ""
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true) //TODO U CAN USE OPERATOR 'with(supportActionBar)'
+        with (supportActionBar) {
+            title = ""
+            this?.setDisplayHomeAsUpEnabled(true)
+            this?.setDisplayShowHomeEnabled(true)
+        }//TODO U CAN USE OPERATOR 'with(supportActionBar)' - FIXED
+//        supportActionBar?.title = ""
+//        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+//        supportActionBar?.setDisplayShowHomeEnabled(true)
     }
 }

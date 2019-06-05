@@ -1,6 +1,5 @@
 package com.example.irregularverbs.mvp.progress
 
-import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
@@ -25,21 +24,41 @@ class ProgressActivity : BaseActivity(), ProgressView {
         setListeners()
         initActionBar()
         initRealm()
-        progressPresenter.getTypeOfSkill()
+        progressPresenter.checkConditionAndUnlockButton()
     }
 
     override fun startVerbListActivity(level: Int?) {
         val intent = Intent(this, VerbListActivity::class.java)
         val tagLevel = getString(R.string.TAG_LEVEL)
-        startActivity(intent.putExtra(tagLevel, tagLevel))
+        startActivity(intent.putExtra(tagLevel, level))
     }
 
     override fun initRealm() {
         Realm.init(this)
     }
 
+    //TODO use your brain - FIXED(??????)
+
     private fun setListeners() {
-        val dialog = AlertDialog
+        val deleteAllProgressDialog = buildDeleteAllProgressAlertDialog()
+        val noVerbsHereDialog = buildNoVerbsHereAlertDialog()
+
+        resetProgressButton.setOnClickListener {
+            deleteAllProgressDialog.show()
+        }
+        tooBadButton.setOnClickListener {
+            noVerbsHereDialog.show()
+        }
+        soSoButton.setOnClickListener {
+            noVerbsHereDialog.show()
+        }
+        exactlyKnownButton.setOnClickListener {
+            noVerbsHereDialog.show()
+        }
+    }
+
+    private fun buildDeleteAllProgressAlertDialog(): AlertDialog.Builder {
+        return AlertDialog
             .Builder(this)
             .setTitle("Warning")
             .setMessage("Are you sure want to delete all of your progress?")
@@ -50,100 +69,72 @@ class ProgressActivity : BaseActivity(), ProgressView {
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
-
-        resetProgressButton.setOnClickListener {
-            dialog.show()
-        }
-        tooBadButton.setOnClickListener {
-            showAlertDialog()
-        }
-        soSoButton.setOnClickListener {
-            showAlertDialog()
-        }
-        exactlyKnownButton.setOnClickListener {
-            showAlertDialog()
-        }
     }
 
-    private fun showAlertDialog() { //TODO use your brain
-        AlertDialog.Builder(this)
+    private fun buildNoVerbsHereAlertDialog(): AlertDialog.Builder {
+        return AlertDialog.Builder(this)
             .setTitle(getString(R.string.app_name))
             .setMessage("You have no verbs here")
             .setPositiveButton("Ok") { dialog, _ ->
                 dialog.cancel()
             }
-            .show()
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setFirstLevelProgressTextView(progressPercent: Float) {
-        firstLevelProgressPercentTextView.text = "${DecimalFormat("#.#").format(progressPercent)}%"
+        val formattedProgress = "${DecimalFormat("#.#").format(progressPercent)}%"
+        firstLevelProgressPercentTextView.text = formattedProgress
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setSecondLevelProgressTextView(progressPercent: Float) {
-        secondLevelProgressPercentTextView.text = "${DecimalFormat("#.#").format(progressPercent)}%"
+        val formattedProgress = "${DecimalFormat("#.#").format(progressPercent)}%"
+        secondLevelProgressPercentTextView.text = formattedProgress
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setThirdLevelProgressTextView(progressPercent: Float) {
-        thirdLevelProgressPercentTextView.text = "${DecimalFormat("#.#").format(progressPercent)}%"
+        val formattedProgress = "${DecimalFormat("#.#").format(progressPercent)}%"
+        thirdLevelProgressPercentTextView.text = formattedProgress
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setFourthLevelProgressTextView(progressPercent: Float) {
-        fourthLevelProgressPercentTextView.text = "${DecimalFormat("#.#").format(progressPercent)}%"
+        val formattedProgress = "${DecimalFormat("#.#").format(progressPercent)}%"
+        fourthLevelProgressPercentTextView.text = formattedProgress
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setFifthLevelProgressTextView(progressPercent: Float) {
-        fifthLevelProgressPercentTextView.text = "${DecimalFormat("#.#").format(progressPercent)}%"
+        val formattedProgress = "${DecimalFormat("#.#").format(progressPercent)}%"
+        fifthLevelProgressPercentTextView.text = formattedProgress
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setAmountOfAnswersTextView(rightAnswers: String, wrongAnswers: String) {
-        amountOfAnswersTextView.text = "$rightAnswers correct, $wrongAnswers wrong answers"
+        val text = "$rightAnswers correct, $wrongAnswers wrong answers"
+        amountOfAnswersTextView.text = text
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setTooBadTextView(amountOfTooBadVerbs: String) {
-        tooBadTextView.text = "${resources.getString(R.string.too_bad)} $amountOfTooBadVerbs verbs"
+        val text = "${resources.getString(R.string.too_bad)} $amountOfTooBadVerbs verbs"
+        tooBadTextView.text = text
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setSoSoTextView(amountOfSoSoVerbs: String) {
-        soSoTextView.text = "${resources.getString(R.string.so_so)} $amountOfSoSoVerbs irregular verbs"
+        val text = "${resources.getString(R.string.so_so)} $amountOfSoSoVerbs irregular verbs"
+        soSoTextView.text = text
     }
 
-    @SuppressLint("SetTextI18n")
     override fun setExactlyKnownTextView(amountOfExactlyKnownTextView: String) {
-        exactlyKnownTextView.text =
-            "${resources.getString(R.string.exactly_known)} $amountOfExactlyKnownTextView irregular verbs"
+        val text = "${resources.getString(R.string.exactly_known)} $amountOfExactlyKnownTextView irregular verbs"
+        exactlyKnownTextView.text = text
     }
 
-    fun unlockResultButtons() {
-
+    override fun unlockResultButton(category: Int) {
         val backgroundRes = R.drawable.base_button_background
-    }
-
-    override fun initTooBadButton() {
-        tooBadButton.setBackgroundResource(R.drawable.base_button_background)
-        tooBadButton.setOnClickListener {
-            progressPresenter.startVerbListActivity(1)
+        val button = when (category) {
+            1 -> tooBadButton
+            2 -> soSoButton
+            else -> exactlyKnownButton
         }
-    }
-
-    override fun initSoSoButton() {
-        soSoButton.setBackgroundResource(R.drawable.base_button_background)
-        soSoButton.setOnClickListener {
-            progressPresenter.startVerbListActivity(2)
-        }
-    }
-
-    override fun initExactlyKnownButton() {
-        exactlyKnownButton.setBackgroundResource(R.drawable.base_button_background)
-        exactlyKnownButton.setOnClickListener {
-            progressPresenter.startVerbListActivity(3)
+        button.setBackgroundResource(backgroundRes)
+        button.setOnClickListener {
+            progressPresenter.startVerbListActivity(category)
         }
     }
 }

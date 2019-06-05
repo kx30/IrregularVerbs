@@ -22,8 +22,7 @@ class ChooseLevelFlashcardActivity : BaseActivity(), ChooseLevelFlashcardView {
         setContentView(R.layout.activity_choose_level_flashcard)
         setListeners()
         initRealm()
-        initActionBar()
-        chooseLevelFlashcardPresenter.getTypeOfSkill() //TODO firstViewAttach
+        initActionBar() //TODO firstViewAttach - FIXED
     }
 
     private fun setListeners() {
@@ -75,24 +74,16 @@ class ChooseLevelFlashcardActivity : BaseActivity(), ChooseLevelFlashcardView {
         startActivity(Intent(this, VerbListActivity::class.java).putExtra(getString(R.string.TAG_LEVEL), level))
     }
 
-    override fun initTooBadButton() {
-        tooBadButton.setBackgroundResource(R.drawable.base_button_background)
-        tooBadButton.setOnClickListener {
-            chooseLevelFlashcardPresenter.startVerbListActivity(1)
+    override fun unlockResultButton(category: Int) {
+        val backgroundRes = R.drawable.base_button_background
+        val button = when (category) {
+            1 -> tooBadButton
+            2 -> soSoButton
+            else -> exactlyKnownButton
         }
-    }
-
-    override fun initSoSoButton() {
-        soSoButton.setBackgroundResource(R.drawable.base_button_background)
-        soSoButton.setOnClickListener {
-            chooseLevelFlashcardPresenter.startVerbListActivity(2)
-        }
-    }
-
-    override fun initExactlyKnownButton() {
-        exactlyKnownButton.setBackgroundResource(R.drawable.base_button_background)
-        exactlyKnownButton.setOnClickListener {
-            chooseLevelFlashcardPresenter.startVerbListActivity(3)
+        button.setBackgroundResource(backgroundRes)
+        button.setOnClickListener {
+            chooseLevelFlashcardPresenter.startVerbListActivity(category)
         }
     }
 }

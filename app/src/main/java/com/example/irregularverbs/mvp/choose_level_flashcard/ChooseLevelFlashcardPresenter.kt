@@ -6,6 +6,11 @@ import com.example.irregularverbs.mvp.base.BasePresenter
 @InjectViewState
 class ChooseLevelFlashcardPresenter: BasePresenter<ChooseLevelFlashcardView>() {
 
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        checkConditionAndUnlockButton()
+    }
+
     fun startFlashCardActivity(level: Int) {
         viewState.startFlashCardActivity(level)
     }

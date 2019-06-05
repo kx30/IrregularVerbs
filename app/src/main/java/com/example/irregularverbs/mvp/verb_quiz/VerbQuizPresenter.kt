@@ -1,5 +1,6 @@
 package com.example.irregularverbs.mvp.verb_quiz
 
+import android.util.Log
 import com.arellomobile.mvp.InjectViewState
 import com.arellomobile.mvp.MvpPresenter
 import com.example.irregularverbs.gateway.realm.RealmVerbGateway
@@ -16,14 +17,17 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
     private var currentVerbIndex = 0
     private var formOfVerb: Int = 0
     private var totalAmountOfCorrectAnswers = 0
-    private var progressPercent: Float = 0f //TODO DELETE UNNECESSARY TYPES
+    //TODO DELETE UNNECESSARY TYPES - FIXED
 
-
-    fun loadIrregularVerbs(level: Int) {
-        setLevel(level)
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
         initVerbs()
         getNewVerb()
         loadCurrentProgress()
+    }
+
+    fun loadIrregularVerbs(level: Int) {
+        setLevel(level)
     }
 
     private fun setLevel(level: Int) {
@@ -100,7 +104,8 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
     }
 
     private fun displayProgress() {
-        progressPercent = (100f / (verbs.size * AMOUNT_OF_ANSWERS_TO_COMPLETE)) * totalAmountOfCorrectAnswers
+        val progressPercent = (100f / (verbs.size * AMOUNT_OF_ANSWERS_TO_COMPLETE)) * totalAmountOfCorrectAnswers
+        Log.d(TAG, "displayProgress: $progressPercent")
         viewState.displayProgress(progressPercent)
     }
 
@@ -113,5 +118,7 @@ class VerbQuizPresenter : MvpPresenter<VerbQuizView>() {
         }
     }
 
+
+    private val TAG = "VerbQuizPresenter"
     private fun getCurrentVerb() = verbs[currentVerbIndex]
 }

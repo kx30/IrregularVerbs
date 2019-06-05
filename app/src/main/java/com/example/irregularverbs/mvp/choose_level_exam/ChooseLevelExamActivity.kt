@@ -3,6 +3,7 @@ package com.example.irregularverbs.mvp.choose_level_exam
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
@@ -58,41 +59,31 @@ class ChooseLevelExamActivity : BaseActivity(), ChooseLevelExamView {
     }
 
     override fun firstLevelIsCompleted() {
-        firstLevelButton.text = "Completed"
-        firstLevelButton.setOnClickListener {
-            buildAlertDialog(1)
-        }
+        changeButtonConditionIfCategoryIsCompleted(firstLevelButton, 1)
     }
 
     override fun secondLevelIsCompleted() {
-        secondLevelButton.setBackgroundResource(R.drawable.completed_button)
-        secondLevelButton.text = "Completed"
-        secondLevelButton.setOnClickListener {
-            buildAlertDialog(2)
-        }
+        changeButtonConditionIfCategoryIsCompleted(secondLevelButton, 2)
     }
 
     override fun thirdLevelIsCompleted() {
-        thirdLevelButton.setBackgroundResource(R.drawable.completed_button)
-        thirdLevelButton.text = "Completed" //TODO CLEAR
-        thirdLevelButton.setOnClickListener {
-            buildAlertDialog(3)
-        }
+        changeButtonConditionIfCategoryIsCompleted(thirdLevelButton, 3)
     }
 
     override fun fourthLevelIsCompleted() {
-        fourthLevelButton.setBackgroundResource(R.drawable.completed_button)
-        fourthLevelButton.text = "Completed"
-        fourthLevelButton.setOnClickListener {
-            buildAlertDialog(4)
-        }
+        changeButtonConditionIfCategoryIsCompleted(fourthLevelButton, 4)
     }
 
     override fun fifthLevelIsCompleted() {
-        fifthLevelButton.setBackgroundResource(R.drawable.completed_button)
-        fifthLevelButton.text = "Completed"
-        fifthLevelButton.setOnClickListener {
-            buildAlertDialog(5)
+        changeButtonConditionIfCategoryIsCompleted(fifthLevelButton, 5)
+    }
+
+    private fun changeButtonConditionIfCategoryIsCompleted(button: Button, category: Int) {
+        val alertDialog = buildAlertDialog(category)
+        button.setBackgroundResource(R.drawable.completed_button)
+        button.text = getString(R.string.completed)
+        button.setOnClickListener {
+            alertDialog.show()
         }
     }
 
@@ -100,18 +91,17 @@ class ChooseLevelExamActivity : BaseActivity(), ChooseLevelExamView {
         startActivity(Intent(this, VerbQuizActivity::class.java).putExtra(getString(R.string.TAG_LEVEL), level))
     }
 
-    private fun buildAlertDialog(level: Int) {
-        AlertDialog.Builder(this)
+    private fun buildAlertDialog(category: Int): AlertDialog.Builder {
+        return AlertDialog.Builder(this)
             .setTitle("Warning")
             .setMessage("Are you sure want to delete all of your progress this level?")
             .setPositiveButton("Yes") { _, _ ->
                 Toast.makeText(this, "Deleted", Toast.LENGTH_SHORT).show()
-                chooseLevelExamPresenter.deleteProgressOfLevel(level)
-                chooseLevelExamPresenter.startVerbQuizActivityButtonWasClicked(level)
+                chooseLevelExamPresenter.deleteProgressOfLevel(category)
+                chooseLevelExamPresenter.startVerbQuizActivityButtonWasClicked(category)
             }
             .setNegativeButton("No") { dialog, _ ->
                 dialog.cancel()
             }
-            .show()
     }
 }

@@ -11,8 +11,13 @@ class ProgressPresenter : BasePresenter<ProgressView>() {
 
     private var progressPercent: Float = 0f
     private var totalAmountOfCorrectAnswers: Int = 0
-    private lateinit var verbs: ArrayList<Verb>
+    private lateinit var verbs: List<Verb>
 
+
+    override fun onFirstViewAttach() {
+        super.onFirstViewAttach()
+        checkConditionAndUnlockButton()
+    }
 
     fun startVerbListActivity(level: Int?) {
         viewState.startVerbListActivity(level)
@@ -94,7 +99,7 @@ class ProgressPresenter : BasePresenter<ProgressView>() {
     }
 
     private fun setExactlyKnownTextView() {
-        val verbs = RealmVerbGateway().loadSoSoBVerbs()
+        val verbs = RealmVerbGateway().loadExactlyKnownVerbs()
         viewState.setExactlyKnownTextView(changeCounterAmountOfVerbs(verbs).toString())
     }
 

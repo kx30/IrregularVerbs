@@ -6,7 +6,9 @@ import android.support.v7.widget.SearchView
 import android.view.Menu
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.example.irregularverbs.R
+import com.example.irregularverbs.mvp.adapter.VerbAdapter
 import com.example.irregularverbs.mvp.base.BaseActivity
+import com.example.irregularverbs.mvp.models.Verb
 import com.example.irregularverbs.mvp.utils.CustomOnQueryTextListener
 import kotlinx.android.synthetic.main.activity_verbs_list.*
 
@@ -21,9 +23,11 @@ class VerbListActivity : BaseActivity(), VerbListView, IrregularThings {
         setContentView(R.layout.activity_verbs_list)
         initActionBar()
         val startLevel = getChosenLevelForVerbs()
-        verbListPresenter.initPresenter(startLevel) //TODO add parametr
+        verbListPresenter.initPresenter(startLevel) //TODO add parametr - fixed
         initRecyclerView()
     }
+
+    //    verbListRecyclerView.adapter = VerbAdapter(verbListPresenter.getSearchResultVerbs())
 
     override fun getChosenLevelForVerbs(): Int {
         //        verbListPresenter.setLevel(level)
@@ -43,12 +47,14 @@ class VerbListActivity : BaseActivity(), VerbListView, IrregularThings {
         return true
     }
 
+    //TODO MAKE NOTIFYDATASETCHANGED
     override fun notifyDataSetChangedAdapter() {
         verbListPresenter.initAdapter()
     }
 
-//    verbListRecyclerView.adapter = VerbAdapter(verbListPresenter.getSearchResultVerbs())
-
+    override fun initAdapter(searchResultVerbs: ArrayList<Verb>) {
+        verbListRecyclerView.adapter = VerbAdapter(searchResultVerbs)
+    }
 
     private fun initRecyclerView() {
         verbListRecyclerView.layoutManager = LinearLayoutManager(this)
